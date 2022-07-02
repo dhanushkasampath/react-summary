@@ -1,6 +1,9 @@
-import NewMeetupForm from "../components/meetups/NewMeetupForm";
+import NewMeetupForm from '../components/meetups/NewMeetupForm';
+import { useNavigate } from 'react-router-dom';
+
 
 function NewMeetupsPage(){
+    const navigate = useNavigate();
     function addMeetupHandler(meetupData){//This is how we propagate the data upwards.
         fetch('https://react-prep-b4fd7-default-rtdb.firebaseio.com/meetups.json',
             {
@@ -9,7 +12,13 @@ function NewMeetupsPage(){
             headers:{
                 'Content-Type': 'application/json'
             }
+        }).then(() => {
+            navigate('/', {replace:true});//once this happens user can not go back by clicking the back button to
+            // previous form.
         });
+
+        // and then replace history.push('/path') with navigate('/path')
+        // Change history.replace('/path') with navigate('/path', { replace: true })
     }
 
     return (
