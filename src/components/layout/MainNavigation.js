@@ -7,7 +7,7 @@ function MainNavigation(){
     const favoriteCtx = useContext(FavoritesContext);
     return (
         <header className={classes.header}>
-            <div className={classes.logo}>Millennium Fitness Center</div>
+            <div className={classes.logo}>Meetings</div>
             <nav>
                 <ul>
                     <li>
