@@ -1,5 +1,5 @@
 import MeetupList from "../components/meetups/MeetupList";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 const DUMMY_DATA = [
     {
@@ -26,14 +26,25 @@ function AllMeetupsPage(){
     const [isLoading, setIsLoading] = useState(true);
     const [loadedMeetups, setLoadedMeetups] = useState([]);
 
-    fetch(
-        'https://react-prep-b4fd7-default-rtdb.firebaseio.com/meetups.json'
-    ).then(response => {
-        return response.json();
-    }).then(data => {
-        setIsLoading(false);
-        setLoadedMeetups(data);
-    });
+    useEffect(() => {
+        fetch(
+            'https://react-prep-b4fd7-default-rtdb.firebaseio.com/meetups.json'
+        ).then(response => {
+            return response.json();
+        }).then(data => {
+            const meetups = [];
+            for(const key in data){
+                const meetup = {
+                  id: key,
+                  ...data[key]//this is called the spread operator
+                };
+                meetups.push(meetup);
+            }
+
+            setIsLoading(false);
+            setLoadedMeetups(meetups);
+        });
+    }, []);//this empty array tells react to run this function only once when the component is loading.
 
     if(isLoading){
         return (
